@@ -10,7 +10,8 @@ Steps:
 - create cluster using below command
 `civo kubernetes  create chaos`
 - Install Litmus 2.0 
-`git clone https://github.com/litmuschaos/litmus-helm
+`
+git clone https://github.com/litmuschaos/litmus-helm
 cd litmus-helm
 helm install litmuschaos  --namespace litmus ./charts/litmus-2-0-0-beta/
 
@@ -27,11 +28,14 @@ Your release is named litmuschaos and it's installed to namespace: litmus.
 `
 - Check the installation 
 
-`kubectl get pods -n litmus
+`
+kubectl get pods -n litmus
+
 NAME                                                      READY   STATUS    RESTARTS   AGE
 litmuschaos-litmus-2-0-0-beta-frontend-6bbdb89479-lvftk   1/1     Running   0          24h
 litmuschaos-litmus-2-0-0-beta-server-5fdf755679-qnvzj     2/2     Running   0          24h
 litmuschaos-litmus-2-0-0-beta-mongo-0                    1/1     Running   0          24h
+
 `
 
 - 
