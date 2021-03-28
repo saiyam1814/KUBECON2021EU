@@ -10,7 +10,7 @@ Steps:
 - create cluster using below command
 `civo kubernetes  create chaos`
 - Install Litmus 2.0 
-`
+```
 git clone https://github.com/litmuschaos/litmus-helm
 cd litmus-helm
 helm install litmuschaos  --namespace litmus ./charts/litmus-2-0-0-beta/
@@ -25,7 +25,8 @@ NOTES:
 Thank you for installing litmus-2-0-0-beta 😀
 
 Your release is named litmuschaos and it's installed to namespace: litmus.
-`
+```
+
 - Check the installation 
 
 ```
