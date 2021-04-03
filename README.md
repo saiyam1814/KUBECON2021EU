@@ -11,25 +11,9 @@ Steps:
 `civo kubernetes  create chaos`
 - Install Litmus 2.0 
 ```
-git clone https://github.com/litmuschaos/litmus-helm
-cd litmus-helm
-helm install litmuschaos  --namespace litmus ./charts/litmus-2-0-0-beta/
+kubectl create ns litmus 
+kubectl apply -f https://litmuschaos.github.io/litmus/2.0.0-Beta/litmus-2.0.0-Beta.yaml
 
-NAME: litmuschaos
-LAST DEPLOYED: Sat Mar 27 17:40:34 2021
-NAMESPACE: litmus
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
-NOTES:
-Thank you for installing litmus-2-0-0-beta 😀
-
-Your release is named litmuschaos and it's installed to namespace: litmus.
-```
-
-- Check the installation 
-
-```
 kubectl get pods -n litmus
 
 NAME                                                      READY   STATUS    RESTARTS   AGE
@@ -37,4 +21,40 @@ litmuschaos-litmus-2-0-0-beta-frontend-6bbdb89479-lvftk   1/1     Running   0   
 litmuschaos-litmus-2-0-0-beta-server-5fdf755679-qnvzj     2/2     Running   0          24h
 litmuschaos-litmus-2-0-0-beta-mongo-0                    1/1     Running   0          24h
 ```
+
+- Deploy the application 
+```
+kubectl apply -f deploy/hello.yaml
+kubectl get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+helloservice-579fdcf676-2c4f4   1/1     Running   0          10m
+```
+- Eanble Gitops in Litmus 
+
+![image](https://user-images.githubusercontent.com/8190114/113475830-4d215480-9495-11eb-93d2-5a469d86aa6d.png)
+
+- Deploy Prometheus, Blackbox exporter and Grafana
+
+```
+kubectl apply -f monitoring/prometheus
+kubectl apply -f monitoring/blackbox-exporter
+kubectl apply -f monitoring/grafana
+```
+
+- Create Grafana Dashboard by adding Prometheus as the data source and Json data from monitoring/grafana/dashboard.json
+![image](https://user-images.githubusercontent.com/8190114/113475883-780ba880-9495-11eb-9661-750e6f063cef.png)
+
+- Create a custom pod networkloss Workflow and set monitoring to true
+![image](https://user-images.githubusercontent.com/8190114/113475763-24995a80-9495-11eb-818b-ba73dc892d80.png)
+
+
+- Bootstrap Flux and use the path as deploy folder to put the yaml for deployment with new image. It is using the Jinja template in the tmpl folder
+
+```
+flux bootstrap github --components-extra=image-reflector-controller,image-automation-controller --owner=saiyam1814 --repository=KUBECON2021EU --branch=main --path=deploy --token-auth --personal
+```
+- Setup Github Actions for build and push image and create manifest in the deploy folder
+
+
+
 
