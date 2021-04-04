@@ -4,7 +4,7 @@ metadata:
   name: helloservice
   annotations: 
     litmuschaos.io/gitops: "true"
-    litmuschaos.io/workflow: ""
+    litmuschaos.io/workflow: "419538a7-7fee-429b-933d-b8ee1bd7fd7f"
 
 spec:
   selector:
@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: saiyam911/kubeconeu:sha-f709213
+        image: saiyam911/kubeconeu:sha-501f356
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
